@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ReadyToMove</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Begin string for each page -->
+
+
+    <!-- Main Activity Page -->
+    <string name="from_string">From:</string>
+    <string name="to_string">To:</string>
+    <string name="back_to_main">Back To Main Page</string>
+    <string name="title_activity_from_main_activity2">FromMainActivity2</string>
+    <string name="title_activity_from_main">FromMainActivity</string>
+
+</resources>
