@@ -12,49 +12,66 @@
         android:id="@+id/hello_world_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/ready_to_move_descr" />
 
 
     <TextView
+        android:id="@+id/fromMainTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Seattle"
-        android:id="@+id/fromMainTextView"
         android:layout_alignBaseline="@+id/fromButtonMain"
         android:layout_alignBottom="@+id/fromButtonMain"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Seattle"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
+        android:id="@+id/toMainTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Baltimore"
-        android:id="@+id/toMainTextView"
-        android:layout_below="@+id/fromMainTextView"
         android:layout_alignLeft="@+id/fromMainTextView"
         android:layout_alignStart="@+id/fromMainTextView"
-        android:layout_marginTop="74dp" />
+        android:layout_below="@+id/fromMainTextView"
+        android:layout_marginTop="74dp"
+        android:text="Baltimore"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="From:"
         android:id="@+id/fromButtonMain"
-        android:layout_below="@+id/hello_world_text"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To:"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/hello_world_text"
+        android:text="From:" />
+
+    <Button
         android:id="@+id/toButtonMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/toMainTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp" />
+        android:text="To:" />
+
+
+    <View
+        android:id="@+id/horizLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toButtonMain"
+        android:layout_marginTop="20dp"
+        android:background="@color/black" />
+
+
+    <Button
+        android:id="@+id/buttonBox"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/horizLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/storage_label"
+        />
 
 
 </RelativeLayout>

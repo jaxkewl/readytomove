@@ -1,4 +1,4 @@
-package com.marshong.readytomove;
+package com.marshong.packitup;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

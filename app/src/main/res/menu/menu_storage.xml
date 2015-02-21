@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.marshong.packitup.StorageListActivity">
+
+    <item
+        android:id="@+id/addStorageItem"
+        android:icon="@drawable/ic_add_a_storage_item"
+        android:orderInCategory="100"
+        android:title="Add Storage"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="200"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+
+
+</menu>
