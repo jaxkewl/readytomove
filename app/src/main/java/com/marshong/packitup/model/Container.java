@@ -1,4 +1,4 @@
-package com.marshong.packitup.stuff;
+package com.marshong.packitup.model;
 
 import java.lang.String;
 import java.util.ArrayList;
@@ -8,13 +8,16 @@ import java.util.ArrayList;
  */
 public class Container {
     private String name;
-    private Globals.Rooms room;
+    private String location;
+    private int locationID;
+    private String descr;
     private ArrayList<Item> items;
 
 
-    public Container(String name, Globals.Rooms location) {
+    public Container(String name, String descr, String location) {
         setName(name);
-        setRoom(location);
+        setLocation(location);
+        setDescr(descr);
         items = new ArrayList<>();
     }
 
@@ -61,11 +64,32 @@ public class Container {
         this.name = name;
     }
 
-    public Globals.Rooms getRoom() {
-        return room;
+    public String getLocation() {
+        return location;
     }
 
-    public void setRoom(Globals.Rooms room) {
-        this.room = room;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescr() {
+        return descr;
+    }
+
+    public void setDescr(String descr) {
+        this.descr = descr;
+    }
+
+    public int getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(int locationID) {
+        this.locationID = locationID;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getLocation() + " (" + getLocationID() + ") " + getDescr();
     }
 }

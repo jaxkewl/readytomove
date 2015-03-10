@@ -1,4 +1,4 @@
-package com.marshong.packitup;
+package com.marshong.packitup.ui;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.marshong.packitup.stuff.Container;
-import com.marshong.packitup.stuff.Globals;
-import com.marshong.packitup.stuff.Item;
+import com.marshong.packitup.R;
+import com.marshong.packitup.model.Container;
+import com.marshong.packitup.model.Item;
 
 import java.util.ArrayList;
 
@@ -60,6 +60,90 @@ public class StorageListFragment extends Fragment {
     }
 
     private ArrayList<Container> populateBoxes() {
+        Log.d(TAG, "populating boxes");
+        ArrayList<Container> containers = new ArrayList<>();
+
+
+        Container container = new Container("box1", "descr", "Bathroom");
+        container.addItem(new Item("medicine","descr"));
+        container.addItem(new Item("soap","descr"));
+        containers.add(container);
+
+        container = new Container("box2", "descr", "Bedroom");
+        container.addItem(new Item("guns","descr"));
+        container.addItem(new Item("blurays","descr"));
+        container.addItem(new Item("humidifier","descr"));
+        containers.add(container);
+
+        container = new Container("box3", "descr", "Kitchen");
+        container.addItem(new Item("pots","descr"));
+        container.addItem(new Item("cups","descr"));
+        containers.add(container);
+
+        container = new Container("box4", "descr", "Garage");
+        container.addItem(new Item("tools","descr"));
+        container.addItem(new Item("saw","descr"));
+        container.addItem(new Item("car equipment","descr"));
+        containers.add(container);
+
+        container = new Container("box5", "descr", "Outside");
+        container.addItem(new Item("tools","descr"));
+        container.addItem(new Item("pavers","descr"));
+        containers.add(container);
+
+        container = new Container("box6", "descr", "Bedroom");
+        container.addItem(new Item("clothes","descr"));
+        container.addItem(new Item("sweaters","descr"));
+        container.addItem(new Item("costumes","descr"));
+        containers.add(container);
+
+        container = new Container("box7", "descr", "Bathroom");
+        container.addItem(new Item("hats","descr"));
+        container.addItem(new Item("presents","descr"));
+        container.addItem(new Item("books","descr"));
+        container.addItem(new Item("computer","descr"));
+        container.addItem(new Item("piano","descr"));
+        containers.add(container);
+
+        container = new Container("box8", "descr", "Bedroom");
+        container.addItem(new Item("baby clothes","descr"));
+        container.addItem(new Item("baby socks","descr"));
+        containers.add(container);
+
+        container = new Container("box9", "descr", "Bedroom");
+        container.addItem(new Item("diapers","descr"));
+        container.addItem(new Item("baby medicine","descr"));
+        containers.add(container);
+
+        container = new Container("box10", "descr", "Bedroom");
+        container.addItem(new Item("toys","descr"));
+        container.addItem(new Item("legos","descr"));
+        containers.add(container);
+
+        container = new Container("box11", "descr", "Bathroom");
+        container.addItem(new Item("glasses","descr"));
+        container.addItem(new Item("tables","descr"));
+        containers.add(container);
+
+        container = new Container("box12", "descr", "Garage");
+        container.addItem(new Item("chemicals","descr"));
+        container.addItem(new Item("car stuff","descr"));
+        containers.add(container);
+
+        container = new Container("box13", "descr", "Garage");
+        container.addItem(new Item("fishing stuff","descr"));
+        container.addItem(new Item("car stuff","descr"));
+        containers.add(container);
+
+        container = new Container("box14", "descr", "Bedroom");
+        container.addItem(new Item("books","descr"));
+        container.addItem(new Item("music","descr"));
+        containers.add(container);
+
+        return containers;
+    }
+
+    /*private ArrayList<Container> populateBoxes() {
         Log.d(TAG, "populating boxes");
         ArrayList<Container> containers = new ArrayList<>();
 
@@ -141,7 +225,7 @@ public class StorageListFragment extends Fragment {
         containers.add(container);
 
         return containers;
-    }
+    }*/
 
 
 /*    @Override
@@ -181,7 +265,7 @@ public class StorageListFragment extends Fragment {
 
                 textViewBox.setText(container.getName());
                 textViewItem.setText(container.getAllItemNames());
-                textViewRoom.setText(container.getRoom().toString());
+                textViewRoom.setText(container.getLocation().toString());
             }
             return view;
         }

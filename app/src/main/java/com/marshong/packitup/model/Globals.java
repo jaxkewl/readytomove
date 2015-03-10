@@ -1,4 +1,4 @@
-package com.marshong.packitup.stuff;
+package com.marshong.packitup.model;
 
 /**
  * Created by martin on 2/20/2015.

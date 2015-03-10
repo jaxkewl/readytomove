@@ -1,4 +1,4 @@
-package com.marshong.packitup;
+package com.marshong.packitup.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.marshong.packitup.R;
 
 
 public class StorageListActivity extends ActionBarActivity {
@@ -56,7 +58,7 @@ public class StorageListActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.addStorageItem) {
+        } else if (id == R.id.addStorageContainer) {
             Toast.makeText(StorageListActivity.this, "Selected to Add a Container", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(StorageListActivity.this, AddContainerActivity.class);
             startActivity(intent);

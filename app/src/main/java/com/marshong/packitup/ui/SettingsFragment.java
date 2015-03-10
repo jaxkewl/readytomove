@@ -1,10 +1,12 @@
-package com.marshong.packitup;
+package com.marshong.packitup.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+
+import com.marshong.packitup.R;
 
 /**
  * Created by martin on 2/19/2015.

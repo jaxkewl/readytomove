@@ -1,4 +1,4 @@
-package com.marshong.packitup;
+package com.marshong.packitup.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.marshong.packitup.R;
 
 
 public class MainActivity extends ActionBarActivity {

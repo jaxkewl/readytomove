@@ -1,4 +1,4 @@
-package com.marshong.packitup.stuff;
+package com.marshong.packitup.model;
 
 import java.lang.String;import java.util.ArrayList;
 

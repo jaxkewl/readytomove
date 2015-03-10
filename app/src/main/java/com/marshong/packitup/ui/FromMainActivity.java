@@ -1,4 +1,4 @@
-package com.marshong.packitup;
+package com.marshong.packitup.ui;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.marshong.packitup.R;
 
 
 public class FromMainActivity extends ActionBarActivity {
