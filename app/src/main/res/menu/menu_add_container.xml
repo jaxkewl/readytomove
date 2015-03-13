@@ -3,16 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.marshong.packitup.ui.AddContainerActivity">
 
-    <item
+<!--    <item
         android:id="@+id/add_storage_item"
         android:icon="@drawable/ic_add_a_storage_item"
         android:orderInCategory="100"
         android:title="Add Storage"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="ifRoom" />
 </menu>

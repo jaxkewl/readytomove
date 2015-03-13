@@ -12,6 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/title_size"
         android:text="@string/title_activity_add_item" />
 
     <EditText
@@ -29,8 +30,13 @@
     <Spinner
         android:id="@+id/spinner_item_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"></Spinner>
 
-    </Spinner>
+    <Button
+        android:id="@+id/button_add_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add" />
+
 
 </LinearLayout>

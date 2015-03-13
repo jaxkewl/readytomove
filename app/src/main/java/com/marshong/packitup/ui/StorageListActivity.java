@@ -57,12 +57,30 @@ public class StorageListActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Toast.makeText(StorageListActivity.this, "Settings Menu", Toast.LENGTH_SHORT).show();
+            // start this activity
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+
         } else if (id == R.id.addStorageContainer) {
             Toast.makeText(StorageListActivity.this, "Selected to Add a Container", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(StorageListActivity.this, AddContainerActivity.class);
             startActivity(intent);
+        } else if (id == R.id.action_search) {
+            Toast.makeText(StorageListActivity.this, "Selected Search Action", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.add_item) {
+            Intent intent = new Intent(StorageListActivity.this, AddItemActivity.class);
+            startActivity(intent);
         }
+        else if (id == R.id.add_location_menu_item) {
+            Intent intent = new Intent(StorageListActivity.this, AddLocationActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.action_db_dev){
+            Intent intent = new Intent(StorageListActivity.this, DBDevActivity.class);
+            startActivity(intent);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

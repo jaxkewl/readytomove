@@ -7,19 +7,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.marshong.packitup.ui.SettingsActivity">
+    tools:context="com.marshong.packitup.ui.DBDevActivity.DBDevActivityFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_size"
-        android:text="@string/settings_screen_descr" />
+        android:text="@string/db_dev_title" />
 
-    <FrameLayout
-        android:id="@+id/fragment_settings_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <Button
+        android:id="@+id/button_wipe_db"
+        android:text="Wipe DB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    </FrameLayout>
+    <Button
+        android:id="@+id/button_insert_sample_entries"
+        android:text="Insert Sample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

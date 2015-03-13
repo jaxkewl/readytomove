@@ -7,11 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.marshong.packitup.R;
 
 
 public class MainActivity extends ActionBarActivity {
+
 
     Button fromButton;
     Button toButton;
@@ -64,6 +66,13 @@ public class MainActivity extends ActionBarActivity {
             // start this activity
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
+        }
+        else if (id == R.id.action_search) {
+            Toast.makeText(MainActivity.this, "Selected Search Action", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.action_db_dev){
+            Intent intent = new Intent(MainActivity.this, DBDevActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

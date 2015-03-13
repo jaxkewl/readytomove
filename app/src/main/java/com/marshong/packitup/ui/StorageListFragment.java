@@ -2,18 +2,24 @@ package com.marshong.packitup.ui;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.marshong.packitup.R;
+import com.marshong.packitup.data.DBHelper;
 import com.marshong.packitup.model.Container;
 import com.marshong.packitup.model.Item;
 
@@ -24,12 +30,21 @@ import java.util.ArrayList;
  */
 public class StorageListFragment extends Fragment {
 
+    DBHelper db;
+    SharedPreferences mPref;
+
+    String mItemTextColor;
+    String mContTextColor;
+    String mLocTextColor;
+    String mTextSize;
+
     public final static String TAG = StorageListFragment.class.getSimpleName();
 
     public StorageListFragment() {
         //required empty constructor
         //Log.d(TAG, "constructor");
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +54,168 @@ public class StorageListFragment extends Fragment {
         //inflate the view first so you can use the view objects.
         View view = inflater.inflate(R.layout.fragment_storage_list, container, false);
 
-        ArrayList<Container> containers = populateBoxes();
+        //get the shared prefs
+        mPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mLocTextColor = mPref.getString("loc_text_color", "#0047AB");
+        mContTextColor = mPref.getString("cont_text_color", "#8BA870");
+        mItemTextColor = mPref.getString("item_text_color", "#000000");
+        mTextSize = mPref.getString("textSize", "18");
+        float textSizeFloat = Float.parseFloat(mTextSize);
+
+
+        //instantiate the DB helper
+        db = new DBHelper(getActivity());
+
+        //get all the items from the database
+        ArrayList<Item> items = db.getAllItems();
+
+        //get all the containers from the database
+        ArrayList<Container> containers = db.getAllContainers();
+
+        //get all the locations, this is how we will be sorting by
+        ArrayList<String> locations = db.getAllLocations();
+
+        ArrayList<String> locationsAdded = new ArrayList<>();
+
+        ScrollView sv = new ScrollView(getActivity());
+        LinearLayout ll = new LinearLayout(getActivity());
+
+        ll.setOrientation(LinearLayout.VERTICAL);
+
+        //we need to prepare a dynamic layout to display all the containers in some order
+        for (String loc : locations) {
+
+            //keep track of which locations were already added.
+            if (!locationsAdded.contains(loc)) {
+                Log.d(TAG, "we have not added " + loc + " yet, adding now");
+                locationsAdded.add(loc);
+            }
+        }
+
+
+        //now iterate through each unique location
+        for (String loc : locationsAdded) {
+
+            TextView tvLoc = new TextView(getActivity());
+            tvLoc.setText(loc);
+
+            tvLoc.setTypeface(Typeface.DEFAULT_BOLD);   //make the location bold
+            //tvLoc.setTextColor(getResources().getColor(R.color.navy_blue));
+            Log.d(TAG, "setting location color to: " + mLocTextColor);
+            tvLoc.setTextColor(Color.parseColor(mLocTextColor));
+            Log.d(TAG, "setting text size to: " + textSizeFloat);
+            tvLoc.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeFloat);
+            //float scale = getResources().getDisplayMetrics().density;
+            //int dpAsPixels = (int) (20 * scale + 0.5f);
+
+            //tvLoc.setTextSize(WebSettings.TextSize.LARGER);
+            ll.addView(tvLoc);
+
+            //now iterate through our containers
+            for (Container c : containers) {
+                Log.d(TAG, "iterating through container: " + c + " loc " + loc);
+                if (loc.equals(c.getLocation())) {
+                    Log.d(TAG, "adding container " + c.getName() + " to location " + c.getLocation());
+                    //add this container to this location
+                    final String containerName = c.toString();
+                    TextView tvContainer = new TextView(getActivity());
+                    tvContainer.setText("  " + c.toString());
+                    tvContainer.setClickable(true);
+                    //tvContainer.setTextColor(getResources().getColor(R.color.cobalt_blue));
+                    Log.d(TAG, "setting container color to: " + mContTextColor);
+                    tvContainer.setTextColor(Color.parseColor(mContTextColor));
+                    tvContainer.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeFloat);
+                    tvContainer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity(), "Clicked on " + containerName, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    ll.addView(tvContainer);
+
+
+                    //now find all the items within this container
+                    for (Item item : items) {
+                        Log.d(TAG, "iterating through item: " + item + " cont " + c);
+                        if (item.getContainerID() == c.getId()) {
+                            Log.d(TAG, "found a match " + item.getContainerID() + " " + c.getId());
+                            TextView tvItem = new TextView(getActivity());
+                            tvItem.setText("    " + item.toString());
+                            Log.d(TAG, "setting ITEM color to: " + mItemTextColor);
+                            tvItem.setTextColor(Color.parseColor(mItemTextColor));
+                            tvItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeFloat);
+                            ll.addView(tvItem);
+                        }
+                    }
+                }
+            }
+
+            //draw our divider line
+            //setup our line view object to draw horizontal lines
+/*            View lineView = new View(getActivity());
+            LinearLayout.LayoutParams lineparams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            lineView.setLayoutParams(lineparams);
+            lineView.setBackgroundColor(Color.BLACK);
+            ll.addView(lineView);*/
+        }
+
+        sv.addView(ll);
+        getActivity().setContentView(sv);
+
+        /*
+        //ArrayList<Container> containers = populateBoxes();
+        ArrayList<Container> containers = ic_db_icon.getAllContainers();
+
+
+        ScrollView sv = new ScrollView(getActivity());
+        LinearLayout ll = new LinearLayout(getActivity());
+
+        ll.setOrientation(LinearLayout.VERTICAL);
+        sv.addView(ll);
+
+        TextView tv = new TextView(getActivity());
+
+        tv.setText("Dynamic layouts ftw!");
+        ll.addView(tv);
+
+        EditText et = new EditText(getActivity());
+        et.setText("weeeeeeeeeee~!");
+
+        ll.addView(et);
+
+        Button b = new Button(getActivity());
+
+        b.setText("I don't do anything, but I was added dynamically. :)");
+        ll.addView(b);
+
+        for(int i = 0; i < 20; i++) {
+            CheckBox cb = new CheckBox(getActivity());
+            cb.setText("I'm dynamic!");
+            ll.addView(cb);
+        }
+*/
+
+        //getActivity().setContentView(sv);
+
+
+        return view;
+    }
+
+
+/*    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        Log.d(TAG, "onCreateView StorageListFragment");
+
+        //inflate the view first so you can use the view objects.
+        View view = inflater.inflate(R.layout.fragment_storage_list, container, false);
+
+        ic_db_icon = new DBHelper(getActivity());
+
+        //ArrayList<Container> containers = populateBoxes();
+        ArrayList<Container> containers = ic_db_icon.getAllContainers();
+
         final ListView listView = (ListView) view.findViewById(R.id.listViewStorageList);
         final StorageListAdapter adapter = new StorageListAdapter(getActivity(), R.layout.storage_list_item, containers);
 
@@ -57,7 +233,7 @@ public class StorageListFragment extends Fragment {
         }
 
         return view;
-    }
+    }*/
 
     private ArrayList<Container> populateBoxes() {
         Log.d(TAG, "populating boxes");
@@ -65,79 +241,79 @@ public class StorageListFragment extends Fragment {
 
 
         Container container = new Container("box1", "descr", "Bathroom");
-        container.addItem(new Item("medicine","descr"));
-        container.addItem(new Item("soap","descr"));
+        container.addItem(new Item("medicine", "descr"));
+        container.addItem(new Item("soap", "descr"));
         containers.add(container);
 
         container = new Container("box2", "descr", "Bedroom");
-        container.addItem(new Item("guns","descr"));
-        container.addItem(new Item("blurays","descr"));
-        container.addItem(new Item("humidifier","descr"));
+        container.addItem(new Item("guns", "descr"));
+        container.addItem(new Item("blurays", "descr"));
+        container.addItem(new Item("humidifier", "descr"));
         containers.add(container);
 
         container = new Container("box3", "descr", "Kitchen");
-        container.addItem(new Item("pots","descr"));
-        container.addItem(new Item("cups","descr"));
+        container.addItem(new Item("pots", "descr"));
+        container.addItem(new Item("cups", "descr"));
         containers.add(container);
 
         container = new Container("box4", "descr", "Garage");
-        container.addItem(new Item("tools","descr"));
-        container.addItem(new Item("saw","descr"));
-        container.addItem(new Item("car equipment","descr"));
+        container.addItem(new Item("tools", "descr"));
+        container.addItem(new Item("saw", "descr"));
+        container.addItem(new Item("car equipment", "descr"));
         containers.add(container);
 
         container = new Container("box5", "descr", "Outside");
-        container.addItem(new Item("tools","descr"));
-        container.addItem(new Item("pavers","descr"));
+        container.addItem(new Item("tools", "descr"));
+        container.addItem(new Item("pavers", "descr"));
         containers.add(container);
 
         container = new Container("box6", "descr", "Bedroom");
-        container.addItem(new Item("clothes","descr"));
-        container.addItem(new Item("sweaters","descr"));
-        container.addItem(new Item("costumes","descr"));
+        container.addItem(new Item("clothes", "descr"));
+        container.addItem(new Item("sweaters", "descr"));
+        container.addItem(new Item("costumes", "descr"));
         containers.add(container);
 
         container = new Container("box7", "descr", "Bathroom");
-        container.addItem(new Item("hats","descr"));
-        container.addItem(new Item("presents","descr"));
-        container.addItem(new Item("books","descr"));
-        container.addItem(new Item("computer","descr"));
-        container.addItem(new Item("piano","descr"));
+        container.addItem(new Item("hats", "descr"));
+        container.addItem(new Item("presents", "descr"));
+        container.addItem(new Item("books", "descr"));
+        container.addItem(new Item("computer", "descr"));
+        container.addItem(new Item("piano", "descr"));
         containers.add(container);
 
         container = new Container("box8", "descr", "Bedroom");
-        container.addItem(new Item("baby clothes","descr"));
-        container.addItem(new Item("baby socks","descr"));
+        container.addItem(new Item("baby clothes", "descr"));
+        container.addItem(new Item("baby socks", "descr"));
         containers.add(container);
 
         container = new Container("box9", "descr", "Bedroom");
-        container.addItem(new Item("diapers","descr"));
-        container.addItem(new Item("baby medicine","descr"));
+        container.addItem(new Item("diapers", "descr"));
+        container.addItem(new Item("baby medicine", "descr"));
         containers.add(container);
 
         container = new Container("box10", "descr", "Bedroom");
-        container.addItem(new Item("toys","descr"));
-        container.addItem(new Item("legos","descr"));
+        container.addItem(new Item("toys", "descr"));
+        container.addItem(new Item("legos", "descr"));
         containers.add(container);
 
         container = new Container("box11", "descr", "Bathroom");
-        container.addItem(new Item("glasses","descr"));
-        container.addItem(new Item("tables","descr"));
+        container.addItem(new Item("glasses", "descr"));
+        container.addItem(new Item("tables", "descr"));
         containers.add(container);
 
         container = new Container("box12", "descr", "Garage");
-        container.addItem(new Item("chemicals","descr"));
-        container.addItem(new Item("car stuff","descr"));
+        container.addItem(new Item("chemicals", "descr"));
+        container.addItem(new Item("car stuff", "descr"));
         containers.add(container);
 
         container = new Container("box13", "descr", "Garage");
-        container.addItem(new Item("fishing stuff","descr"));
-        container.addItem(new Item("car stuff","descr"));
+        container.addItem(new Item("fishing stuff", "descr"));
+        container.addItem(new Item("car stuff", "descr"));
         containers.add(container);
 
         container = new Container("box14", "descr", "Bedroom");
-        container.addItem(new Item("books","descr"));
-        container.addItem(new Item("music","descr"));
+        container.addItem(new Item("books", "descr"));
+        container.addItem(new Item("music", "descr"));
         containers.add(container);
 
         return containers;

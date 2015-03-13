@@ -13,6 +13,8 @@ import com.marshong.packitup.R;
  */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    public static final String TAG = SettingsFragment.class.getSimpleName();
+
     public SettingsFragment() {
         //required empty constructor
     }
@@ -27,11 +29,14 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onPause() {
         super.onPause();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -43,6 +48,4 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             pref.setSummary(lp.getEntry());
         }
     }
-
-
 }

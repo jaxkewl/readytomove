@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class Container {
     private String name;
     private String location;
-    private int locationID;
+    private int locationID = -1;
+    private int id;
     private String descr;
     private ArrayList<Item> items;
 
@@ -88,8 +89,16 @@ public class Container {
         this.locationID = locationID;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return getName() + " " + getLocation() + " (" + getLocationID() + ") " + getDescr();
+        return getName() + " (" + getId() + ") " + getLocation() + " (" + getLocationID() + ") " + getDescr();
     }
 }

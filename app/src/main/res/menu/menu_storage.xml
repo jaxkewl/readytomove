@@ -4,17 +4,45 @@
     tools:context="com.marshong.packitup.ui.StorageListActivity">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="250"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/add_location_menu_item"
+        android:icon="@android:drawable/ic_input_add"
+        android:orderInCategory="195"
+        android:title="Add Location"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
         android:id="@+id/addStorageContainer"
         android:icon="@drawable/ic_add_a_storage_item"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="Add Storage"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/add_item"
+        android:icon="@drawable/ic_add_item"
+        android:orderInCategory="201"
+        android:title="Add Item"
+        app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="200"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:orderInCategory="300"
         android:title="@string/action_settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|withText" />
 
+    <item
+        android:id="@+id/action_db_dev"
+        android:icon="@drawable/ic_db_icon"
+        android:orderInCategory="400"
+        android:title="DB Dev"
+        app:showAsAction="ifRoom|withText" />
 
 </menu>

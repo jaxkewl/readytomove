@@ -9,7 +9,8 @@ public class Item {
     private String name;
     private String descr;
     private String container;
-    private int containerID;
+    private int containerID = -1;
+    private int id;
 
     public Item(String name, String descr) {
 
@@ -49,8 +50,16 @@ public class Item {
         this.containerID = containerID;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return getName() + " " + getDescr() + " " + getContainer() + " (" + getContainerID() + ")";
+        return getName() + " (" + getId() + ") " + getDescr() + " " + getContainer() + " (" + getContainerID() + ")";
     }
 }

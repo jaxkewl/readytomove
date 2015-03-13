@@ -1,6 +1,5 @@
 package com.marshong.packitup.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -10,10 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.marshong.packitup.R;
 import com.marshong.packitup.data.DBHelper;
+import com.marshong.packitup.model.Container;
+
+import java.util.ArrayList;
 
 
 public class AddContainerActivity extends ActionBarActivity {
@@ -44,11 +50,6 @@ public class AddContainerActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.add_storage_item) {
-            Intent intent = new Intent(AddContainerActivity.this, AddItemActivity.class);
-            startActivity(intent);
-        }
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -65,6 +66,11 @@ public class AddContainerActivity extends ActionBarActivity {
         DBHelper dbHelper;
         Button mButtonAddContainer;
 
+        //container information
+        EditText mEditTextContName;
+        EditText mEditTextContDescr;
+        Spinner mSpinnerContLoc;
+
         public AddContainerFragment() {
         }
 
@@ -74,14 +80,37 @@ public class AddContainerActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_add_container, container, false);
 
             dbHelper = new DBHelper(rootView.getContext());
+
+            //get all the locations stored in the DB to use in the location spinner
+            final ArrayList<String> allLocations = dbHelper.getAllLocations();
+
+            mEditTextContName = (EditText) rootView.findViewById(R.id.edit_text_container_name);
+            mEditTextContDescr = (EditText) rootView.findViewById(R.id.edit_text_container_description);
+
+            //populate the spinner
+            mSpinnerContLoc = (Spinner) rootView.findViewById(R.id.spinner_location);
+            ArrayAdapter<String> locAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, allLocations);
+            locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mSpinnerContLoc.setAdapter(locAdapter);
+
             mButtonAddContainer = (Button) rootView.findViewById(R.id.button_submit_new_container);
             mButtonAddContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "onClick adding container");
-                    //dbHelper.insertSampleLocations();
-                    //dbHelper.insertSampleContainers();
-                    //dbHelper.insertSampleItems();
+                    String contName = mEditTextContName.getText().toString();
+                    String contDescr = mEditTextContDescr.getText().toString();
+                    int selectedItem = mSpinnerContLoc.getSelectedItemPosition();
+                    String locName = allLocations.get(selectedItem);
+
+                    Log.d(TAG, "onClick adding container " + contName + " " + contDescr + " " + locName);
+
+                    Container cont = new Container(contName, contDescr, locName);
+                    dbHelper.insertContainer(cont);
+
+/*                    dbHelper.insertSampleLocations();
+                    dbHelper.insertSampleContainers();
+                    dbHelper.insertSampleItems();*/
+                    Toast.makeText(getActivity(), "Added new Container " + cont, Toast.LENGTH_LONG);
                 }
             });
 

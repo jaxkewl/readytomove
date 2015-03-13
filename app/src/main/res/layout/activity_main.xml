@@ -12,6 +12,7 @@
         android:id="@+id/hello_world_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/title_size"
         android:text="@string/ready_to_move_descr" />
 
 
@@ -58,7 +59,7 @@
     <View
         android:id="@+id/horizLine"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_below="@id/toButtonMain"
         android:layout_marginTop="20dp"
         android:background="@color/black" />
@@ -72,6 +73,7 @@
         android:layout_height="wrap_content"
         android:text="@string/storage_label"
         />
+
 
 
 </RelativeLayout>
